@@ -1,11 +1,18 @@
 import React from 'react';
-import { Text, FlatList, View, StyleSheet } from 'react-native';
-
+import { Image, FlatList, View, StyleSheet } from 'react-native';
+import theme from '../theme';
+import Text from './Text';
+import CountAndDescription from './CountAndDescription';
 const styles = StyleSheet.create({
   separator: {
     height: 10,
+    backgroundColor: 'grey',
   },
+  item: {
+    margin: 5,
+  }
 });
+
 
 const repositories = [
   {
@@ -53,20 +60,25 @@ const repositories = [
     ownerAvatarUrl: 'https://avatars3.githubusercontent.com/u/13142323?v=4',
   },
 ];
-
 const ItemSeparator = () =>  <View style={styles.separator}/>;
 const Item = ({item}) => {
-  console.log(item);
   return(
-  <View>
-    <Text>Full name: {item.fullName} </Text>
-    <Text>Description: {item.description} </Text>
-    <Text>Language: {item.language} </Text>
-    <Text>stars: {item.stargazersCount} </Text>
-    <Text>Forks: {item.forksCount} </Text>
-    <Text>Reviews: {item.reviewCount} </Text>
-    <Text>Rating: {item.ratingAverage} </Text>
-  </View>
+    <View style = {styles.item}>
+    <View style= {{display: 'flex', flexDirection: 'row'}}>
+    <Image style = {{...theme.tinyLogo, flexGrow: 0 }} source = {{uri: item.ownerAvatarUrl}} />
+    <View style= {{ margin:5, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <Text fontWeight='bold' >{item.fullName} </Text>
+    <Text color='textSecondary'>{item.description} </Text>
+    <Text color='textWhite' style={{ flexGrow: 0, padding: 5, borderRadius:5,  backgroundColor: theme.colors.primary}}>{item.language} </Text>
+        </View>
+      </View>
+    <View style = {{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+      <CountAndDescription count={item.stargazersCount} text='stars' />
+      <CountAndDescription count={item.forksCount} text='forks' />
+      <CountAndDescription count={item.reviewCount} text='Reviews' />
+      <CountAndDescription count={item.ratingAverage} text='Rating' />
+      </View>
+    </View>
   );
 };
 

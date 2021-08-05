@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
+import Text from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
     container: { 
       paddingTop: Constants.statusBarHeight,
-      backgroundColor: theme.colors.backGroundPrimary,
+      backgroundColor: theme.colors.appbarbackgroundPrimary,
       height: 100,
       flexDirection: 'row',
       alignItems: 'center',
@@ -20,7 +21,7 @@ const AppBar = () => (
         backgroundColor: pressed ? 
         theme.colors.buttonPrimary :
         theme.colors.backGroundPrimary}]} >
-      <Text style={{color: 'white'}} >
+      <Text color='textWhite'>
         Repositories
       </Text>
     </Pressable>
