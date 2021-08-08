@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
 import Text from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
@@ -12,36 +12,44 @@ const styles = StyleSheet.create({
       height: 100,
       flexDirection: 'row',
       alignItems: 'center',
+      padding: 10,
+    },
+    pressable:{
+      margin: 5,
     }
 });
 const AppBar = () => (
   <View style={styles.container}>
-    <Pressable style={({pressed}) => [
-      { 
-        margin: 10,
-        backgroundColor: pressed ? 
-        theme.colors.buttonPrimary :
-        theme.colors.backGroundPrimary}]
-      }>
-      <Link to ='/'>
-        <Text color='textWhite'>
-            Repositories
-        </Text>
-      </Link>
-    </Pressable>
-    <Pressable style={({pressed}) => [
-      { 
-        margin: 10,
-        backgroundColor: pressed ? 
-        theme.colors.buttonPrimary :
-        theme.colors.backGroundPrimary}]
-      } >
-      <Link to='/signin' >
-        <Text color='textWhite'>
-          Sign in
-        </Text>
-      </Link>
-    </Pressable>
+    <ScrollView horizontal>
+      <Pressable style={({pressed}) => [
+        { 
+          ...styles.pressable,
+          backgroundColor: pressed ? 
+          theme.colors.buttonPrimary :
+          theme.colors.backGroundPrimary},
+        ]
+          
+        }>
+        <Link to ='/'>
+          <Text color='textWhite'>
+              Repositories
+          </Text>
+        </Link>
+      </Pressable>
+      <Pressable style={({pressed}) => [
+        { 
+          ...styles.pressable,
+          backgroundColor: pressed ? 
+          theme.colors.buttonPrimary :
+          theme.colors.backGroundPrimary}]
+        } >
+        <Link to='/signin' >
+          <Text color='textWhite'>
+            Sign in
+          </Text>
+        </Link>
+      </Pressable>
+    </ScrollView>
   </View>
 );
 

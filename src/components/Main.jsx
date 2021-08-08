@@ -16,11 +16,11 @@ const Main = () =>{
       <View >
       <AppBar />
         <Switch>
-          <Route path='/' exact>
-            <RepositoryList />
-          </Route>
           <Route path='/signin' exact>
             <SignIn />
+          </Route>
+          <Route path='/' exact>
+            <RepositoryList />
           </Route>
           <Redirect to='/' />
         </Switch>
