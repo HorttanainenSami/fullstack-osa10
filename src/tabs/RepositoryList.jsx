@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, FlatList, View, StyleSheet } from 'react-native';
 import theme from '../theme';
-import Text from './Text';
-import CountAndDescription from './CountAndDescription';
+import Text from '../components/Text';
+import CountAndDescription from '../components/CountAndDescription';
 const styles = StyleSheet.create({
   separator: {
     height: 10,

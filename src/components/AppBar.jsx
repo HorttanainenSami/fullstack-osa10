@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import theme from '../theme';
 import { Link } from 'react-router-native';
 
+
 const styles = StyleSheet.create({
     container: { 
       paddingTop: Constants.statusBarHeight,
@@ -22,8 +23,8 @@ const AppBar = () => (
   <View style={styles.container}>
     <ScrollView horizontal>
       <Pressable style={({pressed}) => [
+        styles.pressable,
         { 
-          ...styles.pressable,
           backgroundColor: pressed ? 
           theme.colors.buttonPrimary :
           theme.colors.backGroundPrimary},
@@ -37,8 +38,8 @@ const AppBar = () => (
         </Link>
       </Pressable>
       <Pressable style={({pressed}) => [
+        styles.pressable,
         { 
-          ...styles.pressable,
           backgroundColor: pressed ? 
           theme.colors.buttonPrimary :
           theme.colors.backGroundPrimary}]
