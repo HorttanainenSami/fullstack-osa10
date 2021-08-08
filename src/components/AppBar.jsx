@@ -3,6 +3,7 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import Text from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
+import { Link } from 'react-router-native';
 
 const styles = StyleSheet.create({
     container: { 
@@ -20,12 +21,28 @@ const AppBar = () => (
         margin: 10,
         backgroundColor: pressed ? 
         theme.colors.buttonPrimary :
-        theme.colors.backGroundPrimary}]} >
-      <Text color='textWhite'>
-        Repositories
-      </Text>
+        theme.colors.backGroundPrimary}]
+      }>
+      <Link to ='/'>
+        <Text color='textWhite'>
+            Repositories
+        </Text>
+      </Link>
     </Pressable>
-    </View>
+    <Pressable style={({pressed}) => [
+      { 
+        margin: 10,
+        backgroundColor: pressed ? 
+        theme.colors.buttonPrimary :
+        theme.colors.backGroundPrimary}]
+      } >
+      <Link to='/signin' >
+        <Text color='textWhite'>
+          Sign in
+        </Text>
+      </Link>
+    </Pressable>
+  </View>
 );
 
 export default AppBar;
