@@ -1,40 +1,34 @@
 import React from 'react';
-import {Formik, useField} from 'formik';
-import { TextInput, View } from 'react-native';
+import { Formik } from 'formik';
+import { View } from 'react-native';
+import FormikTextInput from '../components/FormikTextInput';
+import Button from '../components/Button';
 const initialValues = {
   username:'',
   password: '',
+};
+const onPress = (values) => {
+  const username = values.username;
+  const password = values.password;
 
-}
-const SigninForm = () => {
-  const [usernameField, usernameMeta, usernameHelper] = useField('username');
-  const showusernameError = usernameMeta.touched && usernameMeta.error;
-  const [passwordField, passwordMeta, passwordHelper] = useField('password');
-  const showpasswordError = passwordMeta.touched && passwordMeta.error;
+  console.log(`username: ${username} and password ${password}`);
+};
+const SigninForm = ({onSubmit}) => {
   return(
-    <View>
-      <TextInput
-        value={usernameField.value}
-        placeholder ='username'
-        onChangeText={text => usernameHelper.setValue(text)}
-        onBlur={() => usernameHelper.setTouched(true)}
-        error={showusernameError}
-      />
-      <TextInput
-        value={passwordField.value}
-        secureTextEntry={true}
-        placeholder ='password'
-        onChangeText={text => passwordHelper.setValue(text)}
-        onBlur={() => passwordHelper.setTouched(true)}
-        error={showpasswordError}
-      />
+    <View style={{display:'flex'}}>
+      <FormikTextInput name='username' placeholder='username'/>
+      <FormikTextInput name='password' placeholder='password' secureTextEntry={true}/>
+      <Button handlePress={onSubmit} text='Sign in' />
     </View>
-  )
-}
+  );
+};
 const SignIn = () => {
   return (
-  <Formik initialValues={initialValues} >
-    {({onSubmit}) =><SigninForm onSubmit={onSubmit}/>}
+  <Formik 
+    initialValues={initialValues} 
+    onSubmit={onPress} 
+    >
+    {({handleSubmit}) =><SigninForm onSubmit={handleSubmit}/>}
   </Formik>
   );
 };
