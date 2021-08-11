@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text as NativeText, StyleSheet } from 'react-native';
+import { Text as NativeText, StyleSheet,Platform } from 'react-native';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.normal,
+    fontFamily: theme.fonts.main,
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
@@ -38,6 +39,9 @@ const Text = ({color, fontSize, fontWeight, style, ...props}) => {
     color === 'textError' && styles.colorTextError,
     fontSize === 'subheading' && styles.fontSizeTextSecondary,
     fontWeight === 'bold' && styles.fontBoldText,
+    Platform.OS === 'android' && styles.fontFamily.andoid,
+    Platform.OS === 'ios' && styles.fontFamily.ios,
+    
 
     style,
   ];
