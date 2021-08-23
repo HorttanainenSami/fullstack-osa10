@@ -5,7 +5,7 @@ import FormikTextInput from '../components/FormikTextInput';
 import Button from '../components/Button';
 import * as yup from 'yup';
 import useSignin from '../hooks/useSignin';
-import AuthStorage from '../utils/authStorage';
+import AuthStorageContext from '../contexts/AuthStorageContext';
 
 const initialValues = {
   username:'',
@@ -35,7 +35,7 @@ const SigninForm = ({onSubmit}) => {
 };
 const SignIn = () => {
   const [signIn] = useSignin();
-  const auth = new AuthStorage('person');
+  const auth = React.useContext(AuthStorageContext);
   const onPress =  async (values) => {
     const username = values.username;
     const password = values.password;
