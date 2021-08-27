@@ -18,7 +18,7 @@ const theme = {
     body: 14,
     subheading: 16,
   },
-  fonts: {
+  fontFamily: {
     main: 'System',
     android: 'Roboto',
     ios: 'Arial',

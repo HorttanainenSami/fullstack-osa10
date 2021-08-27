@@ -1,19 +1,11 @@
 import React from 'react';
-import { Platform, TextInput as NativeTextInput, StyleSheet } from 'react-native';
-import theme from '../theme';
+import { TextInput as NativeTextInput, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
     padding: 5,
     margin: 5,
     borderWidth:1,
-    fontFamily: theme.fonts.main,
-  },
-  android:{
-    fontFamily: theme.fonts.android,
-  },
-  ios:  {
-    fontFamily: theme.fonts.ios,
   },
   error:{
     borderColor:'red',
@@ -23,8 +15,6 @@ const styles = StyleSheet.create({
 const TextInput = ({style, error, ...props}) => {
   const TextInputStyles =[
     styles.text,
-    Platform.OS === 'android' && styles.android,
-    Platform.OS === 'ios' && styles.ios,
     style,
     error  && styles.error,
     

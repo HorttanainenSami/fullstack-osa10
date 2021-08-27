@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.normal,
-    fontFamily: theme.fonts.main,
+    fontFamily: theme.fontFamily.main,
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
@@ -26,8 +26,13 @@ const styles = StyleSheet.create({
   },
   colorTextError:{
     color:theme.colors.error,
-  }
-
+  },
+  androidFontFamily:{
+    fontFamily: theme.fontFamily.android,
+  },
+  iosFontFamily:{
+    fontFamily: theme.fontFamily.ios,
+  },
 
 });
 const Text = ({color, fontSize, fontWeight, style, ...props}) => {
@@ -39,8 +44,8 @@ const Text = ({color, fontSize, fontWeight, style, ...props}) => {
     color === 'textError' && styles.colorTextError,
     fontSize === 'subheading' && styles.fontSizeTextSecondary,
     fontWeight === 'bold' && styles.fontBoldText,
-    Platform.OS === 'android' && styles.fontFamily.andoid,
-    Platform.OS === 'ios' && styles.fontFamily.ios,
+    Platform.OS === 'android' && styles.androidFontFamily,
+    Platform.OS === 'ios' && styles.iosFontFamily,
     
 
     style,
