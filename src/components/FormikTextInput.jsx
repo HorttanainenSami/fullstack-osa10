@@ -4,8 +4,8 @@ import Text from './Text';
 import {useField} from 'formik';
 
 
-const FormikTextInput = ({name, style, ...props}) => {
-  const [field, meta, helper] = useField({name});
+const FormikTextInput = (props) => {
+  const [field, meta, helper] = useField(props.name);
   const showError = meta.touched && meta.error;
   return(
     <>
@@ -14,7 +14,6 @@ const FormikTextInput = ({name, style, ...props}) => {
         onChangeText={text => helper.setValue(text)}
         onBlur={() => helper.setTouched(true)}
         error={showError}
-        style={style}
         {...props}
       />
       {showError && <Text color='textError'> {showError} </Text>}
