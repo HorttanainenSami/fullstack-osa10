@@ -6,10 +6,11 @@ import useRepositories from '../hooks/useRepositories';
 import Button from '../components/Button';
 import * as Linking from 'expo-linking';
 import { useHistory } from 'react-router-dom';
+
 const styles = StyleSheet.create({
   separator: {
     height: 10,
-    backgroundColor: 'grey',
+    backgroundColor: theme.colors.backgroundSecondary,
   },
   item: {
     margin: 5,

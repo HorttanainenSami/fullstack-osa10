@@ -33,9 +33,9 @@ export const AUTHORIZED_USER = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-  query($id:ID!) {
-     repository(id:$id){
-        id,
+query($id:ID!){
+  repository(id:$id){
+    id,
         name,
         ownerName,
         createdAt,
@@ -45,10 +45,23 @@ export const GET_REPOSITORY = gql`
         forksCount,
         stargazersCount,
         description,
-        language,
+				language,
         ownerAvatarUrl,
-        url
-      }
+        url,
+         reviews {
+          edges {
+            node {
+              id
+              text
+              rating
+              createdAt
+              user {
+                id
+                username
+              }
+            }
+          }
+        }
   }
-
+}
 `;
