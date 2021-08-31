@@ -13,15 +13,19 @@ const styles = StyleSheet.create({
 });
 
 const TextInput = ({style, error, ...props}) => {
-  const TextInputStyles =[
+  const [state, setState] = React.useState({height: 0});
+  let TextInputStyles =[
     styles.text,
     style,
     error  && styles.error,
-    
+    {height: Math.max(35, state.height)}
 ];
   return(
     <NativeTextInput
       style={TextInputStyles}
+      onContentSizeChange={(event) => {
+        setState({height: event.nativeEvent.contentSize.height});
+        }}
       {...props}
     />
   );

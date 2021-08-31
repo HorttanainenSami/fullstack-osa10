@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { View, Pressable, Text } from 'react-native';
+import { View} from 'react-native';
 import FormikTextInput from '../components/FormikTextInput';
 import Button from '../components/Button';
 import * as yup from 'yup';
@@ -40,7 +40,7 @@ const SigninForm = ({onSubmit}) => {
 export const SigninContainer = ({ onPress }) => (
   <Formik 
     initialValues={initialValues} 
-    onSubmit={() =>onPress} 
+    onSubmit={onPress} 
     validationSchema={validationSchema}
     >
     {({handleSubmit}) =><SigninForm onSubmit={handleSubmit}/>}
@@ -50,6 +50,7 @@ const SignIn = () => {
   const [signIn] = useSignin();
   const auth = React.useContext(AuthStorageContext);
   const onPress =  async (values) => {
+    console.log('pressed');
     const username = values.username;
     const password = values.password;
     try{

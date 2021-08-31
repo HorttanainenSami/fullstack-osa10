@@ -6,3 +6,11 @@ export const SIGN_IN = gql`
       credentials: $credentials,
     ){accessToken}
   }`;
+
+export const CREATE_REVIEW = gql`
+  mutation($input: CreateReviewInput!) {
+    createReview(review: $input ){
+        repositoryId,
+    }
+  }
+`;

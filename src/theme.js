@@ -35,6 +35,7 @@ const theme = {
     padding: 5,
     margin: 5,
     alignItems: 'center',
+    cursor:'pointer',
   }
 };
 

@@ -5,7 +5,7 @@ import RepositoryList from '../tabs/RepositoryList';
 import AppBar from './AppBar';
 import SignIn from '../tabs/SignInView';
 import Repository from '../tabs/Repository';
-import { useHistory } from 'react-router-dom';
+import CreateReview from '../tabs/CreateReview';
 
 const styles = StyleSheet.create({
     container: {
@@ -14,16 +14,17 @@ const styles = StyleSheet.create({
     }
 });
 const Main = () =>{
-  const history = useHistory();
-  console.log(history.location);
   return(
-      <View >
+      <View style={styles}>
       <AppBar />
-        <Switch>
+        <Switch >
           <Route path='/signin' exact>
             <SignIn />
           </Route>
-          <Route path="/repository/:id">
+          <Route path='/review' exact>
+            <CreateReview />
+          </Route>
+          <Route path="/repository/:id" exact>
             <Repository  />
           </Route>
           <Route path='/' exact>

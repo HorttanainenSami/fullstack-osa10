@@ -45,7 +45,7 @@ const Repository = () => {
   },[id]);
   
   React.useEffect(() => {
-    if(!loading && data){
+    if(!loading && data?.repository?.reviews){
       setReviews( data.repository.reviews.length !== 0 ? data.repository.reviews.edges.map(edge => edge.node): []);
     }
   }, [loading]);
@@ -74,7 +74,6 @@ const RepositoryInfo = ({ repository }) => {
     />);
 };
 const ReviewItem = ({item}) => {
-  console.log(item);
   // fetch reviews
   return(
     <View style={styles.item}>

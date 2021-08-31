@@ -8,6 +8,7 @@ import { AUTHORIZED_USER } from '../gql/queries';
 import { useQuery } from '@apollo/client';
 import AuthStorageContext from '../contexts/AuthStorageContext';
 import { useApolloClient } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 const styles = StyleSheet.create({
     container: { 
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
     },
     pressable:{
       margin: 5,
+      cursor:'pointer',
     }
 });
 const AppBar = () => {
@@ -27,12 +29,17 @@ const AppBar = () => {
   const authStorage = React.useContext(AuthStorageContext);
   const [logged, setLogged] = React.useState(false);
   const apolloClient = useApolloClient();
+  const history = useHistory();
   React.useEffect(()=> {
     if(data?.authorizedUser){
       setLogged(true);
     }
 },[data]);
-  const onPress = () => {
+  const handleSign = () => {
+    if(!logged) {
+      history.push('/signin');
+      return;
+    }
     authStorage.removeAccessToken();
     apolloClient.resetStore();
     setLogged(false);
@@ -50,7 +57,6 @@ const AppBar = () => {
             theme.colors.backGroundPrimary,
           },
           ]
-            
         }>
           <Link to ='/'>
             <Text color='textWhite'>
@@ -58,9 +64,24 @@ const AppBar = () => {
             </Text>
           </Link>
         </Pressable>
+    {logged && <Pressable style={({pressed}) => [
+          styles.pressable,
+          { 
+            backgroundColor: pressed ? 
+            theme.colors.buttonPrimary :
+            theme.colors.backGroundPrimary,
+          },
+          ]
+        }>
+        <Link to ='/review' >
+          <Text color='textWhite'>
+            Create a review
+          </Text>
+        </Link>
+        </Pressable>}
 
         <Pressable 
-          onPress ={ logged && onPress}
+          onPress ={handleSign}
           style={({pressed}) => [
             styles.pressable,
             { 
@@ -75,12 +96,10 @@ const AppBar = () => {
           { logged ? 
             <Text color='textWhite'>
               Sign out
-            </Text> 
-          : <Link to='/signin' >
-              <Text color='textWhite'>
+            </Text>  :
+            <Text color='textWhite'>
               Sign in
-              </Text>
-            </Link>
+            </Text>
           }
         </Pressable>
 
