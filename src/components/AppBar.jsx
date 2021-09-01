@@ -8,7 +8,7 @@ import { AUTHORIZED_USER } from '../gql/queries';
 import { useQuery } from '@apollo/client';
 import AuthStorageContext from '../contexts/AuthStorageContext';
 import { useApolloClient } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import AppBarTabButton from './AppBarTabButton';
 
 const styles = StyleSheet.create({
     container: { 
@@ -24,85 +24,71 @@ const styles = StyleSheet.create({
       cursor:'pointer',
     }
 });
+const Repositories = () => (
+    <AppBarTabButton >
+      <Link to ='/'>
+        <Text color='textWhite'>
+            Repositories
+        </Text>
+      </Link>
+    </AppBarTabButton>
+);
+const CreateReview = () => (
+    <AppBarTabButton to='/review' >
+      <Text color='textWhite'>
+        Create a review
+      </Text>
+    </AppBarTabButton>
+);
+const Signin = () => (
+    <AppBarTabButton to='/signin'>
+      <Text color='textWhite'>
+        Sign in
+      </Text>
+    </AppBarTabButton>
+);
+const SignUp = () => (
+    <AppBarTabButton to='/signup'> 
+      <Text  color='textWhite'>
+        Sign up
+      </Text>
+    </AppBarTabButton>
+);
+const SignOut = ({setLogged }) => {
+  const authStorage = React.useContext(AuthStorageContext);
+  const apolloClient = useApolloClient();
+  const handleSignout = () => {
+      authStorage.removeAccessToken();
+      apolloClient.resetStore();
+      setLogged(false);
+  };
+  return(
+    <AppBarTabButton to='/' onPress={handleSignout}>
+      <Text color='textWhite'>
+        Sign out
+      </Text>
+    </AppBarTabButton>
+  );
+};
 const AppBar = () => {
   const {data} = useQuery(AUTHORIZED_USER);
-  const authStorage = React.useContext(AuthStorageContext);
   const [logged, setLogged] = React.useState(false);
-  const apolloClient = useApolloClient();
-  const history = useHistory();
   React.useEffect(()=> {
     if(data?.authorizedUser){
       setLogged(true);
     }
 },[data]);
-  const handleSign = () => {
-    if(!logged) {
-      history.push('/signin');
-      return;
-    }
-    authStorage.removeAccessToken();
-    apolloClient.resetStore();
-    setLogged(false);
-  };
 
   return(
     <View style={styles.container}>
       <ScrollView horizontal>
-
-        <Pressable style={({pressed}) => [
-          styles.pressable,
-          { 
-            backgroundColor: pressed ? 
-            theme.colors.buttonPrimary :
-            theme.colors.backGroundPrimary,
-          },
-          ]
-        }>
-          <Link to ='/'>
-            <Text color='textWhite'>
-                Repositories
-            </Text>
-          </Link>
-        </Pressable>
-    {logged && <Pressable style={({pressed}) => [
-          styles.pressable,
-          { 
-            backgroundColor: pressed ? 
-            theme.colors.buttonPrimary :
-            theme.colors.backGroundPrimary,
-          },
-          ]
-        }>
-        <Link to ='/review' >
-          <Text color='textWhite'>
-            Create a review
-          </Text>
-        </Link>
-        </Pressable>}
-
-        <Pressable 
-          onPress ={handleSign}
-          style={({pressed}) => [
-            styles.pressable,
-            { 
-              backgroundColor: pressed ? 
-              theme.colors.buttonPrimary :
-              theme.colors.backGroundPrimary,
-              zIndex: 0.5,
-            }
-          ]
-        }>
-          
-          { logged ? 
-            <Text color='textWhite'>
-              Sign out
-            </Text>  :
-            <Text color='textWhite'>
-              Sign in
-            </Text>
-          }
-        </Pressable>
-
+        <Repositories />
+        { logged && <CreateReview /> }
+        { logged 
+          ? <SignOut setLogged={setLogged} /> 
+          : <Signin />
+        }
+        {!logged && <SignUp /> } 
       </ScrollView>
     </View>
   );

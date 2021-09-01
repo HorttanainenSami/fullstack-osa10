@@ -6,6 +6,8 @@ import AppBar from './AppBar';
 import SignIn from '../tabs/SignInView';
 import Repository from '../tabs/Repository';
 import CreateReview from '../tabs/CreateReview';
+import SignUp from '../tabs/SignUp'; 
+
 
 const styles = StyleSheet.create({
     container: {
@@ -23,6 +25,9 @@ const Main = () =>{
           </Route>
           <Route path='/review' exact>
             <CreateReview />
+          </Route>
+          <Route path='/signup' exact>
+            <SignUp />
           </Route>
           <Route path="/repository/:id" exact>
             <Repository  />
