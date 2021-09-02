@@ -6,7 +6,20 @@ import useRepositories from '../hooks/useRepositories';
 import Button from '../components/Button';
 import * as Linking from 'expo-linking';
 import { useHistory } from 'react-router-dom';
+import { Picker } from '@react-native-picker/picker';
 
+const MyComponent = ({ setOrder, order}) => {
+  return(
+    <Picker
+      selectedValue={order}
+      onValueChange={(itemValue, ) => setOrder(itemValue)}>
+        <Picker.Item label='Lastest Repositories' value='normal'/>
+        <Picker.Item label='Highest rated repositories' value='highest'/>
+        <Picker.Item label='Lowest rated repositories' value='lowest'/>
+
+    </Picker>
+  );
+};
 const styles = StyleSheet.create({
   separator: {
     height: 10,
@@ -68,7 +81,7 @@ export const RenderItem = ({item, singleView}) => {
   );
 };
 
-export const RepositoryListContainer = ({repositories}) => {
+export const RepositoryListContainer = ({repositories, order, setOrder}) => {
   const data = repositories ? 
     repositories.edges.map(edge => edge.node): [];
 
@@ -86,6 +99,7 @@ export const RepositoryListContainer = ({repositories}) => {
   return(
     <FlatList
       data={data}
+      ListHeaderComponent={()=><MyComponent order={order} setOrder={setOrder} />} 
       ItemSeparatorComponent={ItemSeparator}
       renderItem = {(props) =>render(props)}
       keyExtractor = {(item) => item.id}
@@ -94,8 +108,12 @@ export const RepositoryListContainer = ({repositories}) => {
 };
 
 const RepositoryList = () => {
-  const {repositories} = useRepositories();
-  return ( <RepositoryListContainer repositories={repositories} />);
+  const [order, setOrder] = React.useState();
+  const {fetchRepositories, repositories} = useRepositories();
+  React.useEffect(() => {
+    fetchRepositories(order);
+  },[order]);
+  return ( <RepositoryListContainer order={order} setOrder={setOrder} repositories={repositories} />);
 };
 
 export default RepositoryList;
