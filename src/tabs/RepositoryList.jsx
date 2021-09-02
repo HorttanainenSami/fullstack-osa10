@@ -6,9 +6,19 @@ import useRepositories from '../hooks/useRepositories';
 import Button from '../components/Button';
 import * as Linking from 'expo-linking';
 import { useHistory } from 'react-router-dom';
+import { Searchbar } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
+import { useDebounce } from 'use-debounce';
 
-const MyComponent = ({ setOrder, order}) => {
+const SeachbarComponent = ({search, setSearch}) => (
+  <Searchbar
+    placeholder='Search'
+    onChangeText={(query) => setSearch(query)}
+    value={search}
+  />
+);
+
+const PickerComponent = ({ setOrder, order}) => {
   return(
     <Picker
       selectedValue={order}
@@ -80,8 +90,15 @@ export const RenderItem = ({item, singleView}) => {
       </View>
   );
 };
-
-export const RepositoryListContainer = ({repositories, order, setOrder}) => {
+const HeaderComponent = ({order, setOrder, search, setSearch}) => {
+  return(
+    <View>
+      <SeachbarComponent search={search} setSearch={setSearch} />
+      <PickerComponent order={order} setOrder={setOrder} /> 
+    </View>
+  );
+};
+export const RepositoryListContainer = ({repositories, order, setOrder, search, setSearch}) => {
   const data = repositories ? 
     repositories.edges.map(edge => edge.node): [];
 
@@ -99,7 +116,7 @@ export const RepositoryListContainer = ({repositories, order, setOrder}) => {
   return(
     <FlatList
       data={data}
-      ListHeaderComponent={()=><MyComponent order={order} setOrder={setOrder} />} 
+    ListHeaderComponent={<HeaderComponent order={order} setOrder={setOrder} search={search} setSearch={setSearch} />}
       ItemSeparatorComponent={ItemSeparator}
       renderItem = {(props) =>render(props)}
       keyExtractor = {(item) => item.id}
@@ -109,11 +126,13 @@ export const RepositoryListContainer = ({repositories, order, setOrder}) => {
 
 const RepositoryList = () => {
   const [order, setOrder] = React.useState();
+  const [search, setSearch] = React.useState('');
+  const [value] = useDebounce(search, 500);
   const {fetchRepositories, repositories} = useRepositories();
   React.useEffect(() => {
-    fetchRepositories(order);
-  },[order]);
-  return ( <RepositoryListContainer order={order} setOrder={setOrder} repositories={repositories} />);
+    fetchRepositories({order, value:value});
+  },[order, value]);
+  return ( <RepositoryListContainer order={order} setOrder={setOrder} search={search} setSearch={setSearch} repositories={repositories} />);
 };
 
 export default RepositoryList;

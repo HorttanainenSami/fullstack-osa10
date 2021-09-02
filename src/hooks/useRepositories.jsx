@@ -7,8 +7,9 @@ const useRepositories = () => {
     });
 
   const fetchRepositories = async (props) => {
+    console.log(props);
     let variables = '';
-    switch(props){
+    switch(props.order){
       case 'normal':
         variables={};
         break;
@@ -25,7 +26,8 @@ const useRepositories = () => {
         };
         break;
     }
-    await getRepositories({variables: {orderBy:variables?.orderBy, orderDirection:variables?.orderDirection}});
+    variables = props.value ? {...variables, searchKeyword: props.value} : variables;
+    await getRepositories({variables: {orderBy:variables?.orderBy, orderDirection:variables?.orderDirection, searchKeyword: variables?.searchKeyword}});
   };
   return{
     repositories: data?.repositories,
